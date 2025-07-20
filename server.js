@@ -19,7 +19,7 @@ const storage = multer.diskStorage({
   },
   filename: (req, file, cb) => {
     const ext = path.extname(file.originalname);
-    cb(null, `${Date.now()}${ext}`);
+    cb(null, `${Date.now()}${ext}`)
   }
 });
 
@@ -70,7 +70,7 @@ app.post('/api/users/login', async (req, res) => {
 
 
 app.post('/api/users/log-scan', async (req, res) => {
-  const { username, filepath, duration, camera_id, animal, pulled_data, date, time } = req.body;
+  const { username, filepath,camera_id, animal, pulled_data, date, time } = req.body;
   try {
     const existingUpload = await User.findOne({ username, 'uploads.filepath': filepath });
     if (existingUpload) {
@@ -79,7 +79,7 @@ app.post('/api/users/log-scan', async (req, res) => {
 
     const result = await User.updateOne({ username }, {
       $push: {
-        uploads: { filepath, duration, camera_id, animal, pulled_data, date, time }
+        uploads: { filepath,camera_id, animal, pulled_data, date, time }
       }
     });
     console.log('Upload metadata logged to database:', result);
